@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "D267F186-1DE9-4F88-96CF-C076D1674543",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "EventTapKit",
+          "name" : "EventTapKit"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "EventTapKitTests",
+        "name" : "EventTapKitTests"
+      }
+    }
+  ],
+  "version" : 1
+}
