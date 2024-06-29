@@ -1,11 +1,6 @@
 import XCTest
 @testable import EventTapKit
 
-func mockInternalCallback(proxy: CGEventTapProxy, type: CGEventType, event: CGEvent, userInfo: UnsafeMutableRawPointer?) -> Unmanaged<CGEvent>? {
-  assertionFailure()
-  return nil
-}
-
 final class EventTapManagerTests: XCTestCase {
   func test_start_calls() async throws {
     let mock = MachPortMock()
@@ -123,4 +118,9 @@ final class EventTapManagerTests: XCTestCase {
 
     XCTAssertEqual(clientCallbackCalls, 1)
   }
+}
+
+func mockInternalCallback(proxy: CGEventTapProxy, type: CGEventType, event: CGEvent, userInfo: UnsafeMutableRawPointer?) -> Unmanaged<CGEvent>? {
+  assertionFailure()
+  return nil
 }
