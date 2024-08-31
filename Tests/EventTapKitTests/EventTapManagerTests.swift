@@ -2,8 +2,13 @@ import XCTest
 @testable import EventTapKit
 
 final class EventTapManagerTests: XCTestCase {
+
+  // MARK: - start
+
   func test_start_calls() async throws {
     let mock = MachPortMock()
+    mock._createEventTap = { _, _, _, _, _, _ in "TAP" }
+    mock._createRunLoopSource = { _, _ in "RUN_LOOP_SOURCE" }
     let sut = EventTapManager(manager: mock)
     sut.start(eventsOfInterest: [.keyDown, .flagsChanged], internalCallback: mockInternalCallback)
 
@@ -37,7 +42,20 @@ final class EventTapManagerTests: XCTestCase {
     let funcs = mock.calls.map(\.funcName)
 
     XCTAssertEqual(funcs, ["createEventTap", "createRunLoopSource", "add"])
+
+    XCTAssertEqual(sut.machPort, "TAP")
+    XCTAssertEqual(sut.runLoopSource, "RUN_LOOP_SOURCE")
   }
+
+  func test_start_withMachPortIsNil() async throws {
+    let mock = MachPortMock()
+    let sut = EventTapManager(manager: mock)
+    mock._createEventTap = { _, _, _, _, _, _ in nil }
+    mock._createRunLoopSource = { _, _ in fatalError() }
+    sut.start(eventsOfInterest: [.keyDown, .flagsChanged], internalCallback: mockInternalCallback)
+  }
+
+  // MARK: - stop
 
   func test_stop_calls() async throws {
     let mock = MachPortMock()
@@ -107,6 +125,8 @@ final class EventTapManagerTests: XCTestCase {
   func test_eventHandler_shouldCallClientCallback() async throws {
     let mock = MachPortMock()
     let sut = EventTapManager(manager: mock)
+    mock._createEventTap = { _, _, _, _, _, _ in "TAP" }
+    mock._createRunLoopSource = { _, _ in "RUN_LOOP_SOURCE" }
     var clientCallbackCalls = 0
 
     sut.start(eventsOfInterest: [], internalCallback: mockInternalCallback) { _, _ in

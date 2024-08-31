@@ -30,7 +30,6 @@ final class MachPortMock: MachPortProtocol {
     callback: CGEventTapCallBack,
     userInfo: UnsafeMutableRawPointer?
   ) -> String? {
-//    _createEventTap(tap, place, options, eventsOfInterest, callback, userInfo)
     calls.append(.init("createEventTap", [
       tap,
       place,
@@ -39,7 +38,7 @@ final class MachPortMock: MachPortProtocol {
       callback,
       userInfo as Any,
     ]))
-    return "TAP"
+    return _createEventTap(tap, place, options, eventsOfInterest, callback, userInfo)
   }
 
   var _getEnabled: (_ tap: String) -> Bool = { _ in fatalError() }
@@ -58,7 +57,7 @@ final class MachPortMock: MachPortProtocol {
 
   var _invalidate: (_ machPort: String) -> Void = { _ in fatalError() }
 
-  func invalidate(machPort: String!) {
+  func invalidate(machPort: String) {
     calls.append(.init("invalidate", machPort as Any))
     // _invalidate(machPort)
   }
@@ -68,9 +67,9 @@ final class MachPortMock: MachPortProtocol {
     _ order: CFIndex
   ) -> String = { _, _ in fatalError() }
 
-  func createRunLoopSource(port: String!, order: CFIndex) -> String! {
+  func createRunLoopSource(port: String, order: CFIndex) -> String {
     calls.append(.init("createRunLoopSource", [port as Any, order]))
-    return "RUN_LOOP_SOURCE"
+    return _createRunLoopSource(port, order)
   }
 
   var _add: (
@@ -79,7 +78,7 @@ final class MachPortMock: MachPortProtocol {
     _ mode: CFRunLoopMode
   ) -> Void = { _, _, _ in fatalError() }
 
-  func add(source: String!, to runLoop: CFRunLoop!, mode: CFRunLoopMode!) {
+  func add(source: String, to runLoop: CFRunLoop, mode: CFRunLoopMode) {
     calls.append(.init("add", [source as Any, runLoop as Any, mode as Any]))
     // _add(source, runLoop, mode)
   }
@@ -90,7 +89,7 @@ final class MachPortMock: MachPortProtocol {
     _ mode: CFRunLoopMode
   ) -> Void = { _, _, _ in fatalError() }
 
-  func remove(source: String!, from runLoop: CFRunLoop!, mode: CFRunLoopMode!) {
+  func remove(source: String, from runLoop: CFRunLoop, mode: CFRunLoopMode) {
     calls.append(.init("remove", [source as Any, runLoop as Any, mode as Any]))
     // _remove(source, runLoop, mode)
   }

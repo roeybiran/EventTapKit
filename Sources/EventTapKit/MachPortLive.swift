@@ -13,19 +13,19 @@ struct MachPortLive: MachPortProtocol {
     CGEvent.tapEnable(tap: tap, enable: isEnabled)
   }
 
-  func createRunLoopSource(port: CFMachPort!, order: CFIndex) -> CFRunLoopSource! {
+  func createRunLoopSource(port: CFMachPort, order: CFIndex) -> CFRunLoopSource {
     CFMachPortCreateRunLoopSource(kCFAllocatorDefault, port, order)
   }
 
-  func remove(source: CFRunLoopSource!, from runLoop: CFRunLoop!, mode: CFRunLoopMode!) {
+  func remove(source: CFRunLoopSource, from runLoop: CFRunLoop, mode: CFRunLoopMode) {
     CFRunLoopRemoveSource(runLoop, source, mode)
   }
 
-  func invalidate(machPort: CFMachPort!) {
+  func invalidate(machPort: CFMachPort) {
     CFMachPortInvalidate(machPort)
   }
 
-  func add(source: RunLoopSource!, to runLoop: CFRunLoop!, mode: CFRunLoopMode!) {
+  func add(source: RunLoopSource, to runLoop: CFRunLoop, mode: CFRunLoopMode) {
     CFRunLoopAddSource(runLoop, source, mode)
   }
 

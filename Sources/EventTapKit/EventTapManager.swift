@@ -55,9 +55,11 @@ final class EventTapManager<T: MachPortProtocol> {
       callback: internalCallback,
       userInfo: UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
     )
-    runLoopSource = machPortManager.createRunLoopSource(port: machPort, order: 0)
+    guard let machPort else { return }
+    let runLoopSource = machPortManager.createRunLoopSource(port: machPort, order: 0)
     machPortManager.add(source: runLoopSource, to: CFRunLoopGetMain(), mode: .commonModes)
 
+    self.runLoopSource = runLoopSource
     self.clientCallback = clientCallback
   }
 
@@ -83,8 +85,8 @@ final class EventTapManager<T: MachPortProtocol> {
 
   // MARK: Private
 
-  private let machPortManager: T
-  private var machPort: T.MachPort?
-  private var runLoopSource: T.RunLoopSource?
-  private var clientCallback: EventTapClient.Callback?
+  let machPortManager: T
+  var machPort: T.MachPort?
+  var runLoopSource: T.RunLoopSource?
+  var clientCallback: EventTapClient.Callback?
 }
