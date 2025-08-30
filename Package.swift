@@ -14,7 +14,7 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
-    .package(url: "https://github.com/roeybiran/RBKit", branch: "main"),
+    .package(url: "https://github.com/roeybiran/RBKit", from: "1.0.0"),
     .package(url: "https://github.com/airbnb/swift", from: "1.0.0"),
   ],
   targets: [
