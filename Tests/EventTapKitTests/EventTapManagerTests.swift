@@ -299,15 +299,15 @@ func makeMockManager() -> (
   cgEventMock: CGEventClientMock,
   cfMachPortMock: CFMachPortClientMock,
   cfRunLoopMock: CFRunLoopClientMock,
-  manager: EventTapManager<CGEventClientMock, CFMachPortClientMock, CFRunLoopClientMock>)
-{
+  manager: EventTapManager<CGEventClientMock, CFMachPortClientMock, CFRunLoopClientMock>
+) {
   let cgEventMock = CGEventClientMock()
   let cfMachPortMock = CFMachPortClientMock()
   let cfRunLoopMock = CFRunLoopClientMock()
   let manager = EventTapManager(
     cgEventClient: cgEventMock,
     cfMachPortClient: cfMachPortMock,
-    cfRunLoopClient: cfRunLoopMock)
+    cfRunLoopClient: cfRunLoopMock
+  )
   return (cgEventMock, cfMachPortMock, cfRunLoopMock, manager)
 }
-

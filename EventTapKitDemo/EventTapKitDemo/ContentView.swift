@@ -1,8 +1,8 @@
 //
 
-import SwiftUI
-import EventTapKit
 import Dependencies
+import EventTapKit
+import SwiftUI
 
 struct ContentView: View {
   @Dependency(\.eventTapClient) var tapClient
@@ -16,11 +16,11 @@ struct ContentView: View {
     }
     .padding()
     .onAppear {
-       tapClient.start(id: "foo", events: [.keyDown], place: .headInsertEventTap) { type, event in
+      tapClient.start(id: "foo", events: [.keyDown], place: .headInsertEventTap) { _, event in
         print("key", event)
         return event
       }
-      tapClient.start(id: "scrollWheel", events: [.scrollWheel], place: .headInsertEventTap) { type, event in
+      tapClient.start(id: "scrollWheel", events: [.scrollWheel], place: .headInsertEventTap) { _, event in
         print("scroll", event)
         return nil
       }

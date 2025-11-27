@@ -33,17 +33,11 @@ final class EventTapManager<
   init(
     cgEventClient: EventClient,
     cfMachPortClient: MachPortClient,
-    cfRunLoopClient: RunLoopClient)
-  {
+    cfRunLoopClient: RunLoopClient
+  ) {
     self.cgEventClient = cgEventClient
     self.cfMachPortClient = cfMachPortClient
     self.cfRunLoopClient = cfRunLoopClient
-  }
-
-  deinit {
-    for id in taps.keys {
-      stop(id: id)
-    }
   }
 
   // MARK: Internal
@@ -62,8 +56,8 @@ final class EventTapManager<
     id: ID,
     eventsOfInterest: [CGEventType],
     place: CGEventTapPlacement = .headInsertEventTap,
-    clientCallback: @escaping EventTapManagerClient.Callback)
-  {
+    clientCallback: @escaping EventTapManagerClient.Callback
+  ) {
     assert(Thread.isMainThread)
 
     guard taps[id] == nil else { return }
@@ -81,7 +75,8 @@ final class EventTapManager<
       place: place,
       options: .defaultTap,
       eventsOfInterest: eventsOfInterestMask,
-      userInfo: UnsafeMutableRawPointer(Unmanaged.passUnretained(box).toOpaque()))
+      userInfo: UnsafeMutableRawPointer(Unmanaged.passUnretained(box).toOpaque())
+    )
 
     guard let machPort else { return }
 

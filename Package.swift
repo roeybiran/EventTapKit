@@ -5,16 +5,17 @@ import PackageDescription
 
 let package = Package(
   name: "EventTapKit",
-  platforms: [.macOS(.v13)],
+  platforms: [.macOS(.v14)],
   products: [
     // Products define the executables and libraries a package produces, making them visible to other packages.
     .library(
       name: "EventTapKit",
-      targets: ["EventTapKit"]),
+      targets: ["EventTapKit"]
+    )
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
-    .package(url: "https://github.com/roeybiran/RBKit", from: "1.0.0"),
+    .package(url: "https://github.com/roeybiran/RBKit", branch: "main"),
     .package(url: "https://github.com/airbnb/swift", from: "1.0.0"),
   ],
   targets: [
@@ -27,9 +28,14 @@ let package = Package(
         .product(name: "Dependencies", package: "swift-dependencies"),
         .product(name: "DependenciesMacros", package: "swift-dependencies"),
       ],
+      swiftSettings: [
+        .enableExperimentalFeature("StrictConcurrency"),
+        .enableUpcomingFeature("InferSendableFromCaptures"),
+      ],
     ),
     .testTarget(
       name: "EventTapKitTests",
-      dependencies: ["EventTapKit"]),
+      dependencies: ["EventTapKit"]
+    ),
   ]
 )
